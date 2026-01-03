@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>EmoTune — Vibrant</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --g1:#FF9A56;
+  --g2:#FF6FCF;
+  --g3:#8D56FF;
+  --muted: rgba(255,255,255,0.85);
+  --shadow: 0 18px 50px rgba(14,10,30,0.45);
+  --max-width:1300px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+
+body{
+  font-family:"Poppins",sans-serif;
+  background:linear-gradient(135deg,var(--g1),var(--g2) 50%,var(--g3));
+  min-height:100vh;
+  color:#fff;
+  padding:28px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* GRID */
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  display:grid;
+  grid-template-columns:1.2fr 0.8fr;
+  gap:26px;
+}
+
+/* LEFT CARD */
+.card{
+  padding:26px;
+  border-radius:18px;
+  backdrop-filter:blur(10px) saturate(120%);
+  background:rgba(255,255,255,0.06);
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,0.09);
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  font-size:22px;
+}
+
+.brand img{
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.header .links a{
+  color:#fff;
+  text-decoration:underline;
+  margin-left:12px;
+}
+
+/* BUTTONS */
+.title{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
+  margin:8px 0 18px;
+}
+
+.controls{display:flex;justify-content:center;gap:14px}
+
+.btn{
+  padding:12px 16px;
+  border-radius:14px;
+  font-weight:800;
+  border:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.15);
+}
+
+.btn.file{background:linear-gradient(90deg,#ffd9ec,#b780ff);color:#32142f}
+.btn.camera{background:#fff;color:#341a40}
+
+.detect{
+  display:block;
+  margin:16px auto;
+  padding:14px 22px;
+  border-radius:16px;
+  background:linear-gradient(90deg,#ff79b0,#8750ff);
+  color:#fff;
+  font-weight:900;
+}
+
+/* STATUS */
+.status{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+
+.emoji{font-size:48px}
+.emotion{font-size:24px;font-weight:800}
+.meta{font-size:15px;color:var(--muted);text-align:center}
+
+/* RIGHT PANEL */
+.player-card{
+  padding:20px;
+  border-radius:18px;
+  height:100%;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  box-shadow:var(--shadow);
+}
+
+.player{
+  margin-bottom:16px;
+  padding:12px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.06);
+}
+
+.now{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.now img{
+  width:64px;
+  height:64px;
+  border-radius:12px;
+  object-fit:cover;
+}
+
+.play-btn{
+  margin-left:auto;
+  padding:10px 16px;
+  border-radius:10px;
+  border:none;
+  background:linear-gradient(90deg,#ffd8f4,#cfa0ff);
+  cursor:pointer;
+}
+
+.seek-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+}
+
+.seek{
+  flex:1;
+  height:7px;
+  border-radius:6px;
+  overflow:hidden;
+  background:rgba(255,255,255,0.2);
+}
+
+.seek div{
+  height:100%;
+  width:0%;
+  background:#fff;
+}
+
+.time{
+  width:40px;
+  font-size:12px;
+  text-align:center;
+  color:#fff;
+}
+
+.playlist{
+  max-height:480px;
+  overflow:auto;
+  padding-right:6px;
+}
+
+.track{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.track:hover{background:rgba(255,255,255,0.1)}
+
+.track img{
+  width:56px;
+  height:56px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.track .play-mini{
+  padding:8px;
+  border-radius:10px;
+  border:none;
+  background:linear-gradient(90deg,#ffd8f4,#cfa0ff);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  
+  <!-- LEFT PANEL -->
+  <main class="card">
+
+    <div class="header">
+      <div class="brand">
+        <img src="/static/logo.png">
+        EmoTune
+      </div>
+      <div class="links">
+        <a href="/profile">Profile</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
+
+    <div class="title">Upload or Capture Your Face</div>
+
+    <div class="controls">
+      <label class="btn file">
+        📁 Choose File
+        <input id="fileInput" type="file" accept="image/*" style="display:none">
+      </label>
+
+      <button class="btn camera" id="openCamera">📷 Open Camera</button>
+    </div>
+
+    <button class="detect" id="detectBtn"> Detect Emotion</button>
+
+    <div class="status">
+      <div class="emoji" id="emoji">🙂</div>
+      <div class="emotion" id="label">No Emotion</div>
+
+      <div class="meta">
+        <div id="genre">Recommended Genre: -</div>
+        <div id="confidence">Confidence: -</div>
+      </div>
+    </div>
+
+    <!-- FIXED IMAGE PREVIEW -->
+    <div style="margin-top:20px; display:flex; justify-content:center;">
+      <img id="previewImg" src=""
+           style="width:260px; height:260px; border-radius:16px; object-fit:cover; display:none; border:2px solid #fff9;">
+    </div>
+
+  </main>
+
+  <!-- RIGHT PANEL -->
+  <aside class="player-card">
+
+    <div class="player" id="playerWrap" style="display:none">
+      <div class="now">
+        <img id="nowArt" src="/static/sample1.jpg">
+        <div>
+          <h4 id="nowTitle">—</h4>
+          <div id="nowArtist" style="font-size:13px;opacity:0.9">—</div>
+        </div>
+        <button class="play-btn" id="playPause">▶</button>
+      </div>
+
+      <div class="seek-row">
+        <div class="time" id="curTime">0:00</div>
+        <div class="seek" id="seekBar"><div id="seekFill"></div></div>
+        <div class="time" id="durTime">0:00</div>
+      </div>
+
+      <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;gap:8px">
+          <button id="prevBtn" class="play-mini">⟸</button>
+          <button id="nextBtn" class="play-mini">⟹</button>
+          <button id="playAll" class="play-mini">Play All</button>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:13px">Vol</span>
+          <input id="volume" type="range" min="0" max="1" step="0.01" value="0.9">
+        </div>
+      </div>
+    </div>
+
+    <div class="playlist" id="playlist"></div>
+
+  </aside>
+
+</div>
+
+<!-- ===================== JAVASCRIPT ===================== -->
+<script>
+/* ELEMENTS */
+const fileInput = document.getElementById('fileInput');
+const openCameraBtn = document.getElementById('openCamera');
+const detectBtn = document.getElementById('detectBtn');
+const previewImg = document.getElementById('previewImg');
+
+const emojiEl = document.getElementById('emoji');
+const labelEl = document.getElementById('label');
+const genreEl = document.getElementById('genre');
+const confEl = document.getElementById('confidence');
+
+const playerWrap = document.getElementById('playerWrap');
+const nowArt = document.getElementById('nowArt');
+const nowTitle = document.getElementById('nowTitle');
+const nowArtist = document.getElementById('nowArtist');
+const playPause = document.getElementById('playPause');
+const seekBar = document.getElementById('seekBar');
+const seekFill = document.getElementById('seekFill');
+const curTime = document.getElementById('curTime');
+const durTime = document.getElementById('durTime');
+const volume = document.getElementById('volume');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const playAllBtn = document.getElementById('playAll');
+const playlistEl = document.getElementById('playlist');
+
+let currentBase64 = null;
+let streamRef = null;
+
+let audio = new Audio();
+audio.crossOrigin = "anonymous";
+audio.preload = "auto";
+
+let tracks = [];
+let currentIndex = -1;
+
+
+/* EMOJI PICKER */
+function pickEmoji(label){
+  if(!label) return "🙂";
+  label = label.toLowerCase();
+  if(label.includes("happy")) return "😄";
+  if(label.includes("sad")) return "😢";
+  if(label.includes("angry")) return "😠";
+  if(label.includes("fear")) return "😨";
+  if(label.includes("surpris")) return "😲";
+  if(label.includes("disgust")) return "🤢";
+  return "🙂";
+}
+
+/* FILE UPLOAD PREVIEW */
+fileInput.addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    currentBase64 = reader.result;
+    previewImg.src = currentBase64;
+    previewImg.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+});
+
+/* OPEN CAMERA */
+openCameraBtn.addEventListener('click', async ()=>{
+
+  if(streamRef){
+    streamRef.getTracks().forEach(t=>t.stop());
+    streamRef = null;
+  }
+
+  try {
+    streamRef = await navigator.mediaDevices.getUserMedia({video:true});
+
+    const camBox = document.createElement("div");
+    camBox.style.position = "fixed";
+    camBox.style.right = "30px";
+    camBox.style.bottom = "30px";
+    camBox.style.width = "260px";
+    camBox.style.padding = "10px";
+    camBox.style.background = "rgba(0,0,0,0.5)";
+    camBox.style.borderRadius = "12px";
+    camBox.style.backdropFilter = "blur(8px)";
+    camBox.style.zIndex = "9999";
+    camBox.id = "camBox";
+
+    const video = document.createElement("video");
+    video.autoplay = true;
+    video.playsInline = true;
+    video.srcObject = streamRef;
+    video.style.width = "100%";
+    video.style.borderRadius = "10px";
+
+    const capBtn = document.createElement("button");
+    capBtn.innerText = "Capture";
+    capBtn.style.marginTop = "10px";
+    capBtn.style.width = "100%";
+    capBtn.style.padding = "10px";
+    capBtn.style.borderRadius = "10px";
+    capBtn.style.background = "linear-gradient(90deg,#ff79b0,#8750ff)";
+    capBtn.style.border = "none";
+    capBtn.style.color = "#fff";
+    capBtn.style.fontWeight = "700";
+    capBtn.style.cursor = "pointer";
+
+    capBtn.onclick = ()=>{
+        const c = document.createElement("canvas");
+        c.width = video.videoWidth;
+        c.height = video.videoHeight;
+
+        const ctx = c.getContext("2d");
+        ctx.drawImage(video,0,0,c.width,c.height);
+
+        currentBase64 = c.toDataURL("image/jpeg",0.9);
+
+        previewImg.src = currentBase64;
+        previewImg.style.display = "block";
+
+        streamRef.getTracks().forEach(t=>t.stop());
+        streamRef = null;
+
+        camBox.remove();
+    };
+
+    camBox.appendChild(video);
+    camBox.appendChild(capBtn);
+
+    document.body.appendChild(camBox);
+
+  } catch(err){
+    alert("Camera error: " + err);
+  }
+});
+
+
+/* DETECT EMOTION */
+detectBtn.addEventListener('click', async ()=>{
+
+  if(!currentBase64){
+    alert("Upload or capture image first!");
+    return;
+  }
+
+  detectBtn.innerText = " Detecting...";
+  detectBtn.disabled = true;
+
+  try {
+    const res = await fetch("/api/upload",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ image: currentBase64 })
+    });
+
+    const data = await res.json();
+
+    const p = data.predicted;
+    emojiEl.innerText = pickEmoji(p.label);
+    labelEl.innerText = p.label.toUpperCase();
+    genreEl.innerText = "Recommended Genre: "+p.genre;
+    confEl.innerText = "Confidence: "+Math.round(p.confidence*100)+"%";
+
+    tracks = data.tracks;
+    renderPlaylist();
+
+    if(tracks.length > 0){
+      playTrack(0,true);
+    }
+
+  } catch(err){
+    alert("Server error");
+  }
+
+  detectBtn.innerText = "🎯 Detect Emotion";
+  detectBtn.disabled = false;
+});
+
+/* PLAYLIST */
+function renderPlaylist(){
+  playlistEl.innerHTML = "";
+
+  if(!tracks.length){
+    playlistEl.innerHTML = "<div>No songs found</div>";
+    return;
+  }
+
+  tracks.forEach((t,i)=>{
+    const row = document.createElement("div");
+    row.className = "track";
+    row.dataset.index = i;
+
+    row.innerHTML = `
+      <img src="${t.image}">
+      <div style="flex:1">
+        <div style="font-weight:700">${t.name}</div>
+        <div style="font-size:13px;opacity:0.9">${t.artist}</div>
+      </div>
+      <button class="play-mini" data-i="${i}">▶</button>
+    `;
+
+    row.addEventListener("click", ()=> playTrack(i,true));
+    row.querySelector(".play-mini").addEventListener("click", e=>{
+      e.stopPropagation();
+      playTrack(i,true);
+    });
+
+    playlistEl.appendChild(row);
+  });
+}
+
+/* PLAYER */
+function playTrack(index, autoplay){
+  if(!tracks[index]) return;
+
+  currentIndex = index;
+  const t = tracks[index];
+
+  audio.src = t.audio;
+  nowArt.src = t.image;
+  nowTitle.innerText = t.name;
+  nowArtist.innerText = t.artist;
+
+  playerWrap.style.display="block";
+
+  if(autoplay) audio.play();
+
+  highlightPlaying();
+}
+
+function highlightPlaying(){
+  playlistEl.querySelectorAll(".track").forEach(el=> el.style.background="none");
+  const a = playlistEl.querySelector(`[data-index="${currentIndex}"]`);
+  if(a) a.style.background="rgba(255,255,255,0.15)";
+}
+
+playPause.addEventListener('click', ()=>{
+  if(audio.paused) audio.play();
+  else audio.pause();
+});
+
+audio.addEventListener('play', ()=> playPause.innerText="⏸");
+audio.addEventListener('pause', ()=> playPause.innerText="▶");
+
+audio.addEventListener('timeupdate', ()=>{
+  if(audio.duration){
+    seekFill.style.width = (audio.currentTime/audio.duration)*100 + "%";
+    curTime.innerText = formatTime(audio.currentTime);
+  }
+});
+
+audio.addEventListener('loadedmetadata', ()=>{
+  durTime.innerText = formatTime(audio.duration);
+});
+
+audio.addEventListener('ended', ()=> nextBtn.click());
+
+function formatTime(t){
+  t = Math.floor(t);
+  return Math.floor(t/60)+":"+String(t%60).padStart(2,"0");
+}
+
+seekBar.addEventListener('click', e=>{
+  const r = seekBar.getBoundingClientRect();
+  const pct = (e.clientX - r.left)/r.width;
+  audio.currentTime = pct * audio.duration;
+});
+
+volume.addEventListener('input', ()=> audio.volume = volume.value );
+
+prevBtn.addEventListener('click', ()=>{
+  if(currentIndex>0) playTrack(currentIndex-1,true);
+});
+
+nextBtn.addEventListener('click', ()=>{
+  if(currentIndex<tracks.length-1) playTrack(currentIndex+1,true);
+});
+
+playAllBtn.addEventListener('click', ()=>{
+  if(tracks.length) playTrack(0,true);
+});
+
+</script>
+
+</body>
+</html>

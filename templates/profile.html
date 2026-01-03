@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your Profile - EmoTune</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  margin:0;
+  font-family:"Poppins",sans-serif;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#FF9A56,#FF6FCF 50%,#8D56FF);
+}
+
+.card{
+  width:460px;
+  padding:40px;
+  border-radius:28px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.25);
+  backdrop-filter:blur(20px);
+  color:white;
+  text-align:center;
+  box-shadow:0 20px 55px rgba(0,0,0,0.45);
+}
+
+.profile-pic{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:15px;
+  border:3px solid rgba(176, 161, 236, 0.6);
+  box-shadow:0 0 18px rgba(72, 14, 118, 0.5);
+}
+
+.info-box{
+  text-align:left;
+  background:rgba(18, 156, 177, 0.2);
+  padding:18px;
+  border-radius:20px;
+  font-size:17px;
+  line-height:1.8;
+}
+
+.info-box i{ color:#ffe2ff; margin-right:10px; }
+
+button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:none;
+  border-radius:20px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(90deg,#FF9A56,#FF6FCF,#8D56FF);
+  color:white;
+  box-shadow:0 0 18px rgba(24, 90, 120, 0.4);
+}
+
+button:hover{ transform:scale(1.05); }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <!-- PROFILE IMAGE (keep yours or use {{ user.profile_pic }}) -->
+  <img src="/static/profile pic.jpg" class="profile-pic">
+ 
+
+  <h2>My Profile</h2>
+
+  <div class="info-box">
+    <p><i class="fa-solid fa-user"></i> <b>Name:</b> {{ user.full_name }}</p>
+    <p><i class="fa-solid fa-envelope"></i> <b>Email:</b> {{ user.email }}</p>
+    <p><i class="fa-solid fa-cake-candles"></i> <b>Age:</b> {{ user.age }}</p>
+    <p><i class="fa-solid fa-venus-mars"></i> <b>Gender:</b> {{ user.gender }}</p>
+    <p><i class="fa-solid fa-calendar"></i> <b>Joined:</b> {{ user.join_date }}</p>
+  </div>
+
+
+  <form action="/logout" method="get">
+    <button>Logout</button>
+  </form>
+
+</div>
+
+</body>
+</html>

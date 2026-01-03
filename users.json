@@ -1,0 +1,14 @@
+{
+    "users": [],
+    "daschhanda059@gmail.com": {
+        "password": "chhanda@123",
+        "full_name": "User",
+        "age": "",
+        "gender": "",
+        "profile_pic": "/static/default-avatar.png",
+        "join_date": "2025-12-01"
+    },
+    "ADMIN": {
+        "password": "12345"
+    }
+}
