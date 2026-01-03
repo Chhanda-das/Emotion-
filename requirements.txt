@@ -1,0 +1,9 @@
+Set-Content requirements.txt @"
+Flask
+gunicorn
+numpy
+pandas
+scikit-learn
+tensorflow-cpu
+opencv-python
+"@
